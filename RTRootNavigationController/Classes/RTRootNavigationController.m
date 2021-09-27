@@ -403,21 +403,28 @@ __attribute((overloadable)) static inline UIViewController *RTSafeWrapViewContro
     self.interactivePopGestureRecognizer.enabled = NO;
     
     if (self.rt_navigationController.transferNavigationBarAttributes) {
-        self.navigationBar.translucent     = self.navigationController.navigationBar.isTranslucent;
-        self.navigationBar.tintColor       = self.navigationController.navigationBar.tintColor;
-        self.navigationBar.barTintColor    = self.navigationController.navigationBar.barTintColor;
-        self.navigationBar.barStyle        = self.navigationController.navigationBar.barStyle;
-        self.navigationBar.backgroundColor = self.navigationController.navigationBar.backgroundColor;
-        
-        [self.navigationBar setBackgroundImage:[self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault]
-                                 forBarMetrics:UIBarMetricsDefault];
-        [self.navigationBar setTitleVerticalPositionAdjustment:[self.navigationController.navigationBar titleVerticalPositionAdjustmentForBarMetrics:UIBarMetricsDefault]
-                                                 forBarMetrics:UIBarMetricsDefault];
-        
-        self.navigationBar.titleTextAttributes              = self.navigationController.navigationBar.titleTextAttributes;
-        self.navigationBar.shadowImage                      = self.navigationController.navigationBar.shadowImage;
-        self.navigationBar.backIndicatorImage               = self.navigationController.navigationBar.backIndicatorImage;
-        self.navigationBar.backIndicatorTransitionMaskImage = self.navigationController.navigationBar.backIndicatorTransitionMaskImage;
+        if (@available(iOS 15.0, *)) {
+            self.navigationBar.standardAppearance = self.navigationController.navigationBar.standardAppearance;
+            self.navigationBar.scrollEdgeAppearance = self.navigationController.navigationBar.scrollEdgeAppearance;
+            self.navigationBar.tintColor       = self.navigationController.navigationBar.tintColor;
+            self.navigationBar.barStyle        = self.navigationController.navigationBar.barStyle;
+        } else {
+            self.navigationBar.translucent     = self.navigationController.navigationBar.isTranslucent;
+            self.navigationBar.tintColor       = self.navigationController.navigationBar.tintColor;
+            self.navigationBar.barTintColor    = self.navigationController.navigationBar.barTintColor;
+            self.navigationBar.barStyle        = self.navigationController.navigationBar.barStyle;
+            self.navigationBar.backgroundColor = self.navigationController.navigationBar.backgroundColor;
+
+            [self.navigationBar setBackgroundImage:[self.navigationController.navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault]
+                                     forBarMetrics:UIBarMetricsDefault];
+            [self.navigationBar setTitleVerticalPositionAdjustment:[self.navigationController.navigationBar titleVerticalPositionAdjustmentForBarMetrics:UIBarMetricsDefault]
+                                                     forBarMetrics:UIBarMetricsDefault];
+
+            self.navigationBar.titleTextAttributes              = self.navigationController.navigationBar.titleTextAttributes;
+            self.navigationBar.shadowImage                      = self.navigationController.navigationBar.shadowImage;
+            self.navigationBar.backIndicatorImage               = self.navigationController.navigationBar.backIndicatorImage;
+            self.navigationBar.backIndicatorTransitionMaskImage = self.navigationController.navigationBar.backIndicatorTransitionMaskImage;
+        }
     }
     [self.view layoutIfNeeded];
 }
