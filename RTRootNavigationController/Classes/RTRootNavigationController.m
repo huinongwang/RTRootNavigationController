@@ -426,7 +426,7 @@ __attribute((overloadable)) static inline UIViewController *RTSafeWrapViewContro
             self.navigationBar.backIndicatorTransitionMaskImage = self.navigationController.navigationBar.backIndicatorTransitionMaskImage;
         }
     }
-    [self.view layoutIfNeeded];
+    //[self.view layoutIfNeeded];
 }
 
 - (void)viewDidLayoutSubviews
